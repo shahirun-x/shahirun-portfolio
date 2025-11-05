@@ -12,7 +12,7 @@ type Props = {
   demo?: string;
 };
 
-const cardVariants = {
+const cardVariants: any = {
   hidden: { opacity: 0, y: 18, scale: 0.995 },
   visible: (i = 0) => ({
     opacity: 1,
@@ -21,6 +21,7 @@ const cardVariants = {
     transition: { delay: i * 0.08, duration: 0.45, ease: 'easeOut' },
   }),
 };
+
 
 export default function ProjectCard({ title, date, desc, index = 0, repo, demo }: Props) {
   return (
