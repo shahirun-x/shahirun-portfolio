@@ -56,6 +56,32 @@ const heroVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 };
 
+// --- PASTE THIS CODE ---
+
+const listVariants: Variants = {
+  visible: {
+    opacity: 1,
+    transition: {
+      when: 'beforeChildren',
+      staggerChildren: 0.08,
+      duration: 0.3,
+    },
+  },
+  hidden: {
+    opacity: 0,
+    transition: {
+      when: 'afterChildren',
+    },
+  },
+};
+
+const itemVariant: Variants = {
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } },
+  hidden: { opacity: 0, y: 10 },
+};
+
+// --- END OF PASTE ---
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-black text-gray-100 antialiased">
