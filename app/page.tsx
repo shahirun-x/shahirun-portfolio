@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import ProjectCard from '../components/ProjectCard';
 
 const projects = [
@@ -11,25 +11,34 @@ const projects = [
     date: 'Jul–Aug 2025',
     desc:
       'This software model leverages a Large Language Model (LLM) to create an intelligent conversational agent for restaurant discovery. It employs a Retrieval-Augmented Generation (RAG) architecture using a custom dataset of Chennai restaurants to provide factually-grounded, personalized, and context-aware recommendations through an interactive Streamlit web interface.',
+    repoUrl: 'https://github.com/shahirun-x/Conversational-AI-for-Personalized-Food-Discovery-A-RAG-Based-Approach-using-a-Large-Language-Model', 
+    demoUrl: 'https://your-live-demo-link.com', // <-- REPLACE THIS
   },
   {
     title: 'Cortex Sense: Neuroadaptive Learning Assistant',
     date: 'Jul–Aug 2025',
     desc:
       'A web-based platform that uses a lightweight, in-browser AI to classify simulated EEG data and trigger real-time adaptive content interventions.',
+    repoUrl: 'https://github.com/shahirun-x/CortexSense',
+    demoUrl: 'https://cortex-sense-demo.com', // <-- REPLACE THIS
   },
   {
-    title: "Project Vāyu: Interactive NLP Analysis of Public Discourse",
+    title: 'Project Vāyu: Interactive NLP Analysis of Public Discourse',
     date: 'Feb–Mar 2025',
     desc:
       'A Python-based interactive dashboard using NLP and Streamlit to analyze and visualize sentiment, topics, and categories from a large dataset of news headlines.',
+    repoUrl: 'https://github.com/shahirun-x/Project-Vayu-News-Headline-Analysis',
+    demoUrl: 'https://project-vayu-demo.com', // <-- REPLACE THIS
   },
+  // --- I HAVE ADDED THE TWO PROJECTS BELOW ---
   {
     title:
       'Deep Learning-Based Spectral-Spatial Analysis of Hyperspectral Data for Crop and Land Cover Classification',
     date: 'Feb–Mar 2025',
     desc:
       'Designed and implemented deep learning models (3D CNNs) for classifying hyperspectral data from multiple sources (Salinas, PURR, and Pavia datasets).',
+    repoUrl: 'https://github.com/shahirun-x/Hyperspectral-Data-Classification', // <-- EXAMPLE, PLEASE REPLACE
+    demoUrl: 'https://your-live-demo-link.com', // <-- REPLACE THIS
   },
   {
     title:
@@ -37,10 +46,12 @@ const projects = [
     date: 'Aug–Oct 2024',
     desc:
       'The software model uses image segmentation and deep learning algorithms to detect and classify waste types such as organic and recyclable materials.',
+    repoUrl: 'https://github.com/shahirun-x/Organic-Recyclable-Classification', // <-- EXAMPLE, PLEASE REPLACE
+    demoUrl: 'https://your-live-demo-link.com', // <-- REPLACE THIS
   },
 ];
 
-const heroVariants: any = {
+const heroVariants: Variants = {
   hidden: { opacity: 0, y: -8 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 };
@@ -81,23 +92,35 @@ export default function Home() {
           <h2 className="text-2xl font-bold mb-6">Projects</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {projects.map((p, i) => (
-              <ProjectCard key={p.title} index={i} title={p.title} date={p.date} desc={p.desc} />
+              <ProjectCard
+  key={p.title}
+  index={i}
+  title={p.title}
+  date={p.date}
+  desc={p.desc}
+  repo={p.repoUrl} // <-- FIX: Change this prop name
+  demo={p.demoUrl} // <-- FIX: Change this prop name
+/>
             ))}
           </div>
         </section>
 
         {/* Skills */}
-        <section id="skills" className="mt-12">
-          <h2 className="text-2xl font-bold mb-4">Skills & Tools</h2>
-          <ul className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-gray-400">
-            <li>Python / PyTorch / TensorFlow</li>
-            <li>LLMs / RAG / NLP</li>
-            <li>Machine Learning / GenAI</li>
-            <li>Computer Vision / Deep Learning</li>
-            <li>Git / AWS / Vercel</li>
-            <li>Data Visualization / Analytics</li>
-          </ul>
-        </section>
+  <motion.section id="skills" className="mt-12" initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.15 }} variants={listVariants}>
+  <h2 className="text-2xl font-bold mb-4">Skills & Tools</h2>
+  <motion.ul className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-gray-400" variants={listVariants}>
+    {[
+      'Python / PyTorch / TensorFlow',
+      'LLMs / RAG / NLP',
+      'Machine Learning / GenAI',
+      'Computer Vision / Deep Learning',
+      'Git / AWS',
+      'Data Visualization / Analytics'
+    ].map((s, idx) => (
+      <motion.li key={s} className="p-2 rounded" variants={itemVariant}>{s}</motion.li>
+    ))}
+  </motion.ul>
+</motion.section>
 
         {/* Leadership & Management */}
         <section id="leadership" className="mt-12">

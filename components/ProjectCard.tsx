@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 type Props = {
   title: string;
@@ -12,7 +12,7 @@ type Props = {
   demo?: string;
 };
 
-const cardVariants: any = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 18, scale: 0.995 },
   visible: (i = 0) => ({
     opacity: 1,
@@ -21,7 +21,6 @@ const cardVariants: any = {
     transition: { delay: i * 0.08, duration: 0.45, ease: 'easeOut' },
   }),
 };
-
 
 export default function ProjectCard({ title, date, desc, index = 0, repo, demo }: Props) {
   return (
