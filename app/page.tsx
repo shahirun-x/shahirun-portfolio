@@ -97,6 +97,18 @@ export default function Home() {
           <motion.a whileHover={{ y: -3 }} className="hover:text-white/90" href="#skills">Skills</motion.a>
           <motion.a whileHover={{ y: -3 }} className="hover:text-white/90" href="#contact">Contact</motion.a>
 
+{/* --- START: NEW RESUME BUTTON --- */}
+          <motion.a
+            whileHover={{ y: -3, scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            href="/Shahirun_Resume.pdf" // <-- This links to the file in /public
+            download // <-- This attribute tells the browser to download it
+            className="ml-2 px-3 py-1.5 rounded-md text-xs font-semibold bg-white/10 text-white hover:bg-white/20 transition-colors"
+          >
+            Download Resume
+          </motion.a>
+          {/* --- END: NEW RESUME BUTTON --- */}
+
           {/* Social links */}
           <motion.a whileHover={{ y: -3 }} href="https://github.com/shahirun-x" target="_blank" rel="noopener noreferrer" className="hover:text-white/90">GitHub</motion.a>
           <motion.a whileHover={{ y: -3 }} href="https://linkedin.com/in/shahirun-s" target="_blank" rel="noopener noreferrer" className="hover:text-white/90">LinkedIn</motion.a>
