@@ -279,6 +279,61 @@ export default function Home() {
           © {new Date().getFullYear()} Shahirun — Built with Next.js + Tailwind
         </footer>
       </section>
+      {/* --- START: MOBILE NAV OVERLAY --- */}
+        {mobileNavOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-lg"
+          >
+            <nav className="flex flex-col items-center justify-center h-full gap-8 text-lg font-semibold text-gray-200">
+              <a
+                href="#projects"
+                className="hover:text-white"
+                onClick={() => setMobileNavOpen(false)} // Closes menu on click
+              >
+                Projects
+              </a>
+              <a
+                href="#skills"
+                className="hover:text-white"
+                onClick={() => setMobileNavOpen(false)} // Closes menu on click
+              >
+                Skills
+              </a>
+              <a
+                href="#contact"
+                className="hover:text-white"
+                onClick={() => setMobileNavOpen(false)} // Closes menu on click
+              >
+                Contact
+              </a>
+              
+              <hr className="w-2/5 border-t border-gray-700" />
+
+              <a
+                href="/Shahirun_Resume.pdf"
+                download
+                className="hover:text-white"
+                onClick={() => setMobileNavOpen(false)} // Closes menu on click
+              >
+                Download Resume
+              </a>
+              
+              <hr className="w-2/5 border-t border-gray-700" />
+
+              {/* Mobile Social Links */}
+              <div className="flex gap-6">
+                <a href="https://github.com/shahirun-x" target="_blank" rel="noopener noreferrer" className="hover:text-white">GitHub</a>
+                <a href="https://linkedin.com/in/shahirun-s" target="_blank" rel="noopener noreferrer" className="hover:text-white">LinkedIn</a>
+                <a href="https://www.youtube.com/@shahirunx" target="_blank" rel="noopener noreferrer" className="hover:text-white">YouTube</a>
+              </div>
+            </nav>
+          </motion.div>
+        )}
+        {/* --- END: MOBILE NAV OVERLAY --- */}
     </main>
   );
 }
