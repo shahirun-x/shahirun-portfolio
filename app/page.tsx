@@ -1,8 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react'; // <-- ADD , { useState }
 import { motion, Variants } from 'framer-motion';
 import ProjectCard from '../components/ProjectCard';
+import { HiMenuAlt3 } from "react-icons/hi"; // <-- ADD THIS
+import { MdClose } from "react-icons/md"; // <-- ADD THIS
 
 const projects = [
   {
@@ -83,8 +85,10 @@ const itemVariant: Variants = {
 // --- END OF PASTE ---
 
 export default function Home() {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   return (
     <main className="min-h-screen bg-black text-gray-100 antialiased">
+      {/* Header */}
       {/* Header */}
       <header className="container mx-auto px-6 py-8 flex items-center justify-between">
         <motion.div initial="hidden" animate="visible" variants={heroVariants}>
@@ -92,29 +96,46 @@ export default function Home() {
           <p className="text-sm text-gray-400">AI Engineer • LLMs • ML • Deep Learning</p>
         </motion.div>
 
-        <nav className="flex gap-4 items-center text-sm">
+        {/* --- START: UPDATED NAV --- */}
+
+        {/* 1. Full Desktop Nav (Hidden on Mobile) */}
+        <nav className="hidden md:flex gap-4 items-center text-sm">
           <motion.a whileHover={{ y: -3 }} className="hover:text-white/90" href="#projects">Projects</motion.a>
           <motion.a whileHover={{ y: -3 }} className="hover:text-white/90" href="#skills">Skills</motion.a>
           <motion.a whileHover={{ y: -3 }} className="hover:text-white/90" href="#contact">Contact</motion.a>
 
-{/* --- START: NEW RESUME BUTTON --- */}
           <motion.a
             whileHover={{ y: -3, scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            href="/Shahirun_Resume.pdf" // <-- This links to the file in /public
-            download // <-- This attribute tells the browser to download it
+            href="/Shahirun_Resume.pdf"
+            download
             className="ml-2 px-3 py-1.5 rounded-md text-xs font-semibold bg-white/10 text-white hover:bg-white/20 transition-colors"
           >
             Download Resume
           </motion.a>
-          {/* --- END: NEW RESUME BUTTON --- */}
 
           {/* Social links */}
-          <motion.a whileHover={{ y: -3 }} href="https://github.com/shahirun-x" target="_blank" rel="noopener noreferrer" className="hover:text-white/90">GitHub</motion.a>
+          <motion.a whileHover={{ y: -3 }} href="https://github.com/shahirun-x" target="_blank" rel="noopener noreferrer" className="hover:text-white/90 ml-2">GitHub</motion.a>
           <motion.a whileHover={{ y: -3 }} href="https://linkedin.com/in/shahirun-s" target="_blank" rel="noopener noreferrer" className="hover:text-white/90">LinkedIn</motion.a>
           <motion.a whileHover={{ y: -3 }} href="https://www.youtube.com/@shahirunx" target="_blank" rel="noopener noreferrer" className="hover:text-white/90">YouTube</motion.a>
           <motion.a whileHover={{ y: -3 }} href="https://www.instagram.com/shahirun.x" target="_blank" rel="noopener noreferrer" className="hover:text-white/90">Instagram</motion.a>
         </nav>
+
+        {/* 2. Mobile Menu Button (Hidden on Desktop) */}
+        <div className="flex md:hidden z-50">
+          <button
+            onClick={() => setMobileNavOpen(!mobileNavOpen)}
+            className="text-gray-300 hover:text-white"
+          >
+            {mobileNavOpen ? (
+              <MdClose size={28} />
+            ) : (
+              <HiMenuAlt3 size={28} />
+            )}
+          </button>
+        </div>
+
+        {/* --- END: UPDATED NAV --- */}
       </header>
 
       <section className="container mx-auto px-6 py-12 grid gap-12">
