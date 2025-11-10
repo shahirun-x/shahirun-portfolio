@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState, FormEvent } from 'react';
 import React, { useState } from 'react'; // <-- ADD , { useState }
 import { motion, Variants } from 'framer-motion';
 import ProjectCard from '../components/ProjectCard';
@@ -86,6 +87,48 @@ const itemVariant: Variants = {
 
 export default function Home() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  // --- START: NEW FORM STATES ---
+  const [formName, setFormName] = useState('');
+  const [formEmail, setFormEmail] = useState('');
+  const [formMessage, setFormMessage] = useState('');
+  const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [formError, setFormError] = useState('');
+  // --- END: NEW FORM STATES ---
+  // --- START: NEW HANDLE SUBMIT FUNCTION ---
+      const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault(); // Stop the page from reloading
+        setFormStatus('loading');
+        setFormError('');
+
+        try {
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: formName,
+              email: formEmail,
+              message: formMessage,
+            }),
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            setFormStatus('success');
+            // Clear the form
+            setFormName('');
+            setFormEmail('');
+            setFormMessage('');
+          } else {
+            setFormStatus('error');
+            setFormError(data.message || 'Something went wrong.');
+          }
+        } catch (error) {
+          setFormStatus('error');
+          setFormError('An unexpected error occurred.');
+        }
+      };
+      // --- END: NEW HANDLE SUBMIT FUNCTION ---
   return (
     <main className="min-h-screen bg-black text-gray-100 antialiased">
       {/* Header */}
@@ -261,12 +304,52 @@ export default function Home() {
         <section id="contact" className="mt-12 p-6 rounded-2xl border border-gray-800">
           <h2 className="text-2xl font-bold mb-4">Contact</h2>
           <p className="text-sm text-gray-400 mb-4">Email: shahirun.x@gmail.com  •  Phone: +91 8628832928  •  Chennai, India</p>
-          <form className="grid gap-3 md:grid-cols-2">
-            <input placeholder="Your name" className="p-3 rounded bg-black/40 border border-gray-800" />
-            <input placeholder="Your email" className="p-3 rounded bg-black/40 border border-gray-800" />
-            <textarea placeholder="Message" className="p-3 rounded bg-black/40 border border-gray-800 md:col-span-2" rows={4} />
-            <button type="submit" className="md:col-span-2 py-3 rounded-lg bg-gradient-to-r from-gray-800 to-gray-700">Send Message</button>
+          {/* --- START: UPDATED FORM --- */}
+          <form className="grid gap-3 md:grid-cols-2" onSubmit={handleSubmit}>
+            <input
+              placeholder="Your name"
+              className="p-3 rounded bg-black/40 border border-gray-800"
+              type="text"
+              value={formName}
+              onChange={(e) => setFormName(e.target.value)}
+              required
+            />
+            <input
+              placeholder="Your email"
+              className="p-3 rounded bg-black/40 border border-gray-800"
+              type="email"
+              value={formEmail}
+              onChange={(e) => setFormEmail(e.target.value)}
+              required
+            />
+            <textarea
+              placeholder="Message"
+              className="p-3 rounded bg-black/40 border border-gray-800 md:col-span-2"
+              rows={4}
+              value={formMessage}
+              onChange={(e) => setFormMessage(e.target.value)}
+              required
+            />
+
+            <div className="md:col-span-2 flex items-center justify-between">
+              <button
+                type="submit"
+                className="py-3 px-6 rounded-lg bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 disabled:opacity-50"
+                disabled={formStatus === 'loading'}
+              >
+                {formStatus === 'loading' ? 'Sending...' : 'Send Message'}
+              </button>
+
+              {/* Status Messages */}
+              {formStatus === 'success' && (
+                <p className="text-sm text-green-400">Message sent successfully!</p>
+              )}
+              {formStatus === 'error' && (
+                <p className="text-sm text-red-400">{formError}</p>
+              )}
+            </div>
           </form>
+          {/* --- END: UPDATED FORM --- */}
         </section>
 
         <footer className="py-8 text-center text-sm text-gray-600">

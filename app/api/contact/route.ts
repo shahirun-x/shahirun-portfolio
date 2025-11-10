@@ -1,41 +1,39 @@
-// app/api/contact/route.ts
-import { NextRequest, NextResponse } from 'next/server';
-import sgMail from '@sendgrid/mail';
+import { NextResponse } from 'next/server';
 
-const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
-const RECIPIENT = process.env.CONTACT_RECIPIENT_EMAIL;
-const SENDER = process.env.CONTACT_SENDER_EMAIL;
-
-if (SENDGRID_API_KEY) {
-  sgMail.setApiKey(SENDGRID_API_KEY);
-}
-
-export async function POST(req: NextRequest) {
+export async function POST(request: Request) {
   try {
-    if (!SENDGRID_API_KEY || !RECIPIENT || !SENDER) {
-      return NextResponse.json({ error: 'Server not configured' }, { status: 500 });
-    }
+    // 1. Parse the incoming request body
+    const body = await request.json();
+    const { name, email, message } = body;
 
-    const body = await req.json();
-    const { name, email, message } = body || {};
-
+    // 2. Server-side validation (basic)
     if (!name || !email || !message) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+      return new NextResponse(
+        JSON.stringify({ message: 'Missing required fields' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
-    const msg = {
-      to: RECIPIENT,
-      from: SENDER,
-      subject: `Portfolio contact from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-      html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p>${message}</p>`,
-    };
+    // 3. Log the data (this is where you would send an email)
+    // For now, this log will appear in your Vercel functions log
+    console.log('--- NEW CONTACT FORM SUBMISSION ---');
+    console.log('Name:', name);
+    console.log('Email:', email);
+    console.log('Message:', message);
+    console.log('-------------------------------------');
 
-    await sgMail.send(msg);
+    // 4. Send a success response back to the client
+    return new NextResponse(
+      JSON.stringify({ message: 'Form submitted successfully!' }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
 
-    return NextResponse.json({ ok: true });
-  } catch (err: any) {
-    console.error('Contact API error:', err);
-    return NextResponse.json({ error: 'Failed to send' }, { status: 500 });
+  } catch (error) {
+    // 5. Handle any errors
+    console.error('Error in contact API:', error);
+    return new NextResponse(
+      JSON.stringify({ message: 'Internal server error' }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    );
   }
 }
