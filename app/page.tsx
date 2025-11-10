@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, FormEvent } from 'react';
-import React, { useState } from 'react'; // <-- ADD , { useState }
 import { motion, Variants } from 'framer-motion';
 import ProjectCard from '../components/ProjectCard';
 import { HiMenuAlt3 } from "react-icons/hi"; // <-- ADD THIS
