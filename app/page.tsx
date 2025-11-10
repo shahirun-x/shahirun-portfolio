@@ -124,7 +124,32 @@ export default function Home() {
             I design and ship AI systems from research prototypes to production-ready demos — specialized in LLMs, RAG, deep learning, and machine learning.
           </p>
         </motion.div>
-
+{/* --- START: NEW ABOUT ME SECTION --- */}
+<motion.section 
+  id="about" 
+  className="mt-4" 
+  initial="hidden" 
+  whileInView="visible" 
+  viewport={{ once: true, amount: 0.2 }}
+  variants={itemVariant} // We can re-use the animation variant from the skills
+>
+  <h2 className="text-2xl font-bold mb-4">About Me</h2>
+  <div className="text-gray-400 space-y-4 max-w-2xl">
+    <p>
+      {/* YOUR 'ABOUT ME' TEXT GOES HERE. SEE EXAMPLE BELOW */}
+      I am a 4th-year Computer Science and Engineering student specializing in AI/ML. 
+      My passion lies in building intelligent systems that solve real-world problems, 
+      from developing advanced RAG models for data discovery to exploring 
+      next-generation cybersecurity threats.
+    </p>
+    <p>
+      Currently, I'm interning at Ran Global Enterprises, where I'm helping 
+      develop an automated production planning AI. I'm actively seeking 
+      a full-time role where I can contribute to cutting-edge AI development.
+    </p>
+  </div>
+</motion.section>
+{/* --- END: NEW ABOUT ME SECTION --- */}
         {/* Projects */}
         <section id="projects">
           <h2 className="text-2xl font-bold mb-6">Projects</h2>
